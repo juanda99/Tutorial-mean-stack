@@ -35,7 +35,18 @@ sudo apt-get install sublime-text-installer
 ## Plugins para Sublime Text 
 - Utilizaremos los siguientes plugins para desarrollo web:
 - **nodejs**: para autocompletado
+- **ExpressComplete**: para autocompletado de Express, por ej:
+
+```
+rget : router.get("/", function(req,res) { } )
+rpost : router.post("/", function(req,res) { } )
+rput : router.put("/", function(req,res) { } )
+rdel : router.delete("/", function(req,res) { } )
+```
+
 - **sidebar enhacements**: ofrece más opciones en el menú lateral
     - El menú lateral aparece y desaparece mediante CTRL + K + B
     - Si no aparecen estas opciones es por haber abierto un fichero con sublime en vez de una carpeta
 - **Sublimelinter** y **SublimeLinter-contrib-eslint**
+- **Emmet**: Escribimos más rápido html y css
+- **HTML Prettify**: Formaterado de js, html y css. Pulsando *CTRL+MAYS+H*
