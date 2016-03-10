@@ -31,3 +31,11 @@ sudo apt-get install sublime-text-installer
 - Por ejemplo ahora un [plugin para edición de MarkDown](https://packagecontrol.io/packages/MarkdownEditing)
     - Podemos cambiar el esquema de colores desde los settings de usuario
     - Utilizamos [GFM](https://help.github.com/enterprise/11.10.340/user/articles/github-flavored-markdown/)
+
+## Plugins para Sublime Text 
+- Utilizaremos los siguientes plugins para desarrollo web:
+- **nodejs**: para autocompletado
+- **sidebar enhacements**: ofrece más opciones en el menú lateral
+    - El menú lateral aparece y desaparece mediante CTRL + K + B
+    - Si no aparecen estas opciones es por haber abierto un fichero con sublime en vez de una carpeta
+- **Sublimelinter** y **SublimeLinter-contrib-eslint**
