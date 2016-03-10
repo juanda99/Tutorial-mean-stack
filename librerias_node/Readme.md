@@ -48,11 +48,11 @@ npm -v
 - Mediante ```npm config --help``` vemos los comandos de configuración
 - Mediante ```npm config ls -l``` vemos los parámetros de configuración
 
-```
-npm set init-author-name 'pepe'
-npm set init-author-email 'pepe@pepe.com
-npm set init-author-url 'http://pepe.com'
-npm set init-license 'MIT'
+```bash
+npm set init-author-name pepe
+npm set init-author-email pepe@pepe.com
+npm set init-author-url http://pepe.com
+npm set init-license MIT
 npm adduser
 ```
 
