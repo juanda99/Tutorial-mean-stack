@@ -50,3 +50,12 @@ rdel : router.delete("/", function(req,res) { } )
 - **Sublimelinter** y **SublimeLinter-contrib-eslint**
 - **Emmet**: Escribimos más rápido html y css
 - **HTML Prettify**: Formaterado de js, html y css. Pulsando *CTRL+MAYS+H*
+- **Mocha Snippets**:
+```
+desc<tab>
+befr<tab>
+aftr<tab>
+suite<tab>
+test<tab>
+```
+- **Git gutter**: para ver las modificaciones del código respecto al último commit. El resto de interacción con Git mediante consola (aunque existen plugins)

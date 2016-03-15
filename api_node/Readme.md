@@ -10,7 +10,7 @@
 2013-07-21: Media type registration completed with the IANA.
 2013-05-03: Initial release of the draft.
 
-
+---
 
 ## Primeros pasos
 - npm configurado y git configurado
@@ -24,6 +24,8 @@
 npm install --save express
 npm i -S express
 ```
+
+---
 
 - Creamos el fichero app/server.js donde pondremos el código necesario para testear una API muy básica para probar Express:
 
