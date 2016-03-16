@@ -334,6 +334,125 @@ commitizen init cz-conventional-changelog --save-dev --save-exact
 ```
 
 
+## Cambio de versión
+- Vamos a comprobar nuestro entorno añadiendo una funcionalidad
+- Si pedimos cervezas.alazar() queremos poder recibir más de una
+- Los tests:
+```
+    it('Debería mostrar varias cervezas de la lista', function (done) {
+        var misCervezas = cervezas.alazar(3);
+        expect(misCervezas).to.have.length(3);
+        misCervezas.forEach(function(cerveza){
+            expect(cervezas.todas).to.include(cerveza);
+        });
+        done();
+    });
+```
 
+- Añadimos la funcionalidad en el *src/index.js*:
+```
+var cervezas = require('./cervezas.json');
+var uniqueRandomArray = require('unique-random-array');
+var _ = require('lodash');
+module.exports = {
+    todas: _.sortBy(cervezas, ['nombre']),
+    alazar: uniqueRandomArray(cervezas)
+}
+```
 
+```
+var cervezas = require('./cervezas.json');
+var uniqueRandomArray = require('unique-random-array');
+var _ = require('lodash');
+var getCerveza = uniqueRandomArray(cervezas)
+module.exports = {
+    todas: _.sortBy(cervezas, ['nombre']),
+    alazar: alazar
+}
 
+function alazar(unidades) {
+    if (unidades===undefinded){
+        return getCerveza();
+    } else {
+        var misCervezas = [];
+        for (var i = 0; i<unidades; i++) {
+            misCervezas.push(getCerveza());
+        }
+        return misCervezas;
+    }
+}
+
+```
+
+- Hagamos ahora el git cz & git push y veamos como funciona todo
+- Podríamos añadir un issue y hacer el fix en este commit escribiendo closes #issue en el footer del commit message.
+
+## Git Hooks
+- Son una manera de ejecutar scripts antes de que ocurra alguna acción
+- Sería ideal pasar los tests antes de que se hiciera el commit
+- Los Git Hooks son locales: 
+    - Si alguien hace un clone del repositorio, no tiene los GitHooks
+    - Instalaremos un paquete de npm para hacer git hooks de forma universal
+
+```
+npm i -D ghooks
+```
+- Lo configuraremos en el package.json en base a la [documentación del paquete](:
+``` 
+ "config": {
+    "ghooks": {
+      "pre-commit": "npm test"
+    }
+  }
+```
+
+## Coverage
+- Nos interesa que todo nuestro código se pruebe mediante tests.
+- Necesitamos una herramienta que compruebe el código mientras se realizan los tests:
+```
+npm i -D instanbul
+```
+- Modificaremos el script de tests en el package.json:
+```
+istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js
+```
+- Instanbul analizará la cobertura de todos los ficheros excepto los de test ejecutando a su vez _mocha (un wrapper de mocha proporcionado por ellos) con los tests.
+- Si ejecutamos ahora *npm test* nos ofrecerá un resumen de la cobertura de nuestros tests.
+- Por último nos crea una carpeta en el proyecto *coverage* donde podemos ver los datos, por ejemplo desde un navegador (fichero index.html)
+- ¡Ojo, recordar poner la carpeta coverage en el .gitignore!
+
+## Check coverage
+- Podemos también evitar los commits si no hay un porcentaje de tests optimo:
+```
+"pre-commit": "npm test && npm run check-coverage"
+```
+- Creamos el script check-coverage dentro del package.json:
+```
+"check-coverage": "istanbul check-coverage --statements 100  --branches 100 --functions 100 -lines 100"
+```
+- Podemos comprobar su ejecución desde el terminal mediante *npm run check-coverage* y añadir una función nueva sin tests, para comprobar que el check-coverage no termina con éxito.
+- Lo podemos añadir también en Travis, de modo que no se haga una nueva release si no hay ciertos estándares (el test si lo hace por defecto):
+```
+script:
+ - npm run test
+ - npm run check-coverage
+```
+
+## Gráficas
+- Utilizaremos la herramienta codecov.io:
+```
+npm i -D codecov.io
+```
+- Crearemos un script que recoge los datos de istanbul:
+```
+"report-coverage": "cat ./coverage/lcov.info | codecov"
+```
+- Lo añadimos en travis de modo que genere un reporte:
+```
+after success:
+ - npm run report-coverage  
+ - npm run semantic-release
+```
+
+- Integrado con github (chrome extension)
+- Por último podemos añadir etiquetas de muchos servicios: npm, codecov, travis... una fuente habitual es http://www.shields.io
