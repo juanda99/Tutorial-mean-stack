@@ -233,6 +233,7 @@ describe('cervezas', function () {
 ```
 - Utiliza los paquetes **Mocha Snippets** y **Chai Completions** de Sublime Text para completar el código
 - Ahora prepararemos una estructura de tests algo más elaborada:
+
 ```
 var expect = require('chai').expect;
 var cervezas = require('./index');
@@ -258,6 +259,7 @@ describe('cervezas', function () {
 ```
 
 - Por último realizamos los tests:
+
 ```
 var expect = require('chai').expect;
 var cervezas = require('./index');
