@@ -320,4 +320,20 @@ semantic-release-cli setup
 - Cambios en package.json:
     - Incluye un nuevo script (*npm run semantic-release*)
     - Quita la versión
+    - Añade la dependencia de desarrollo de Semantic Release
+
+## Versiones del software
+- Utilizamos semantic versioning
+- Semantic Release se ejecuta a través de Travis CI
+- Travis CI se ejecuta al hacer un push (hay que configurarlo desde la web)
+- Los commit tienen que seguir las [reglas del equipo de Angular](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#rules)
+- Para hacerlo más sencillo utilizaremos **commitizen** que nos ayudará en la generación de los mensajes de los commit:
+```
+npm install commitizen -g
+commitizen init cz-conventional-changelog --save-dev --save-exact
+```
+
+
+
+
 
