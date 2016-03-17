@@ -59,3 +59,4 @@ suite<tab>
 test<tab>
 ```
 - **Git gutter**: para ver las modificaciones del código respecto al último commit. El resto de interacción con Git mediante consola (aunque existen plugins)
+- **markdown editing**

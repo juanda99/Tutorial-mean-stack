@@ -1,4 +1,11 @@
-## Microlibrería
+# Crear una librería en node.JS
+
+## Librerías en node
+- Suelen ser pequeñas
+- Es un buen ejemplo de ciclo de desarrollo en node.js
+- Ayuda a tener claro el concepto de paquetes de node
+
+## Microlibrerías
 - Ventajas
     - Poco código, se entiende y modifica con facilidad
     - Reusable
@@ -7,12 +14,11 @@
     - Tienes que gestionar muchas dependencias
     - Control de versiones de todas ellas
 
-## Mi librería
+## Funcionalidad librería
 
 - Obtiene una marca de cerveza y sus características
-- Utilizaremos el fichero cervezas.json
-- [Instalaremos el paquete pretty.json](https://packagecontrol.io/packages/Pretty%20JSON) en Sublime Text	
-- Usando la paleta de comandos (pretty...) podremos formatear, validar o hacer un minify del json
+- Obtiene una o varias marcas de cerveza al azar.
+
     
 ## Control de versiones
 - Utilizaremos git como control de versiones
@@ -21,21 +27,6 @@
     - Crea un nuevo repositorio en GitHub (lo llamaré *cervezas*)
     - Sigue las indicaciones de GitHub para crear el repositorio en local y asociarlo al repositorio remoto (GitHub)
 
-## Control de versiones (II)
-- Cremos nuestra carpeta donde va a ir el proyecto:
-```
-mkdir $HOME/cervezas
-cd $HOME/cervezas
-```
-- Copy-paste de github:
-```
-echo "# cervezas" >> README.md 
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin git@github.com:juanda99/cervezas.git
-git push -u origin master
-```
 
 ## Instalación de node
 - Lo más sencillo es [instalar mediante el gestor de paquetes](https://nodejs.org/en/download/package-manager/)
@@ -54,9 +45,9 @@ npm -v
 
 ## npm
 - Es el gestor de paquetes de node
-- Debemos crear un usuario en https://www.npmjs.com/
+- **Debemos crear un usuario** en https://www.npmjs.com/
 - Podemos buscar los paquetes que nos interese instalar
-- Podemos publicar nuestra librería :-)2:40   
+- Podemos publicar nuestra librería :-)
     
 
 ## Configuración de npm
@@ -65,7 +56,7 @@ npm -v
 - Mediante ```npm config --help``` vemos los comandos de configuración
 - Mediante ```npm config ls -l``` vemos los parámetros de configuración
 
-```bash
+```
 npm set init-author-name pepe
 npm set init-author-email pepe@pepe.com
 npm set init-author-url http://pepe.com
