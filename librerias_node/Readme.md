@@ -305,13 +305,13 @@ sudo apt-get install libgnome-keyring-dev
 ```
 - Instalación y configuración:
 ```
-sudo npm install -g semantic-release-cli
+sudo npm i -g semantic-release-cli
 semantic-release-cli setup
 ```
 
 - **.travis.yml**: contiene la configuración de Travis
 - Cambios en package.json:
-    - Incluye un nuevo script (*npm run semantic-release*)
+    - Incluye un nuevo script (*semantic-release*)
     - Quita la versión
     - Añade la dependencia de desarrollo de Semantic Release
 
@@ -322,10 +322,11 @@ semantic-release-cli setup
 - Los commit tienen que seguir las [reglas del equipo de Angular](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#rules)
 - Para hacerlo más sencillo utilizaremos **commitizen** que nos ayudará en la generación de los mensajes de los commit:
 ```
-npm install commitizen -g
+sudo npm i -g commitizen
 commitizen init cz-conventional-changelog --save-dev --save-exact
 ```
 
+- Habrá que ejecutar **git cz** en vez de **git commit** para que los commits los gestione commitizen
 
 ## Cambio de versión
 - Vamos a comprobar nuestro entorno añadiendo una funcionalidad
@@ -347,16 +348,6 @@ commitizen init cz-conventional-changelog --save-dev --save-exact
 var cervezas = require('./cervezas.json');
 var uniqueRandomArray = require('unique-random-array');
 var _ = require('lodash');
-module.exports = {
-    todas: _.sortBy(cervezas, ['nombre']),
-    alazar: uniqueRandomArray(cervezas)
-}
-```
-
-```
-var cervezas = require('./cervezas.json');
-var uniqueRandomArray = require('unique-random-array');
-var _ = require('lodash');
 var getCerveza = uniqueRandomArray(cervezas)
 module.exports = {
     todas: _.sortBy(cervezas, ['nombre']),
@@ -364,7 +355,7 @@ module.exports = {
 }
 
 function alazar(unidades) {
-    if (unidades===undefinded){
+    if (unidades===undefined){
         return getCerveza();
     } else {
         var misCervezas = [];
@@ -390,7 +381,7 @@ function alazar(unidades) {
 ```
 npm i -D ghooks
 ```
-- Lo configuraremos en el package.json en base a la [documentación del paquete](:
+- Lo configuraremos en el package.json en base a la [documentación del paquete](https://www.npmjs.com/package/ghooks):
 ``` 
  "config": {
     "ghooks": {
@@ -415,7 +406,7 @@ istanbul cover -x *.test.js _mocha -- -R spec src/index.test.js
 - ¡Ojo, recordar poner la carpeta coverage en el .gitignore!
 
 ## Check coverage
-- Podemos también evitar los commits si no hay un porcentaje de tests optimo:
+- Podemos también evitar los commits si no hay un porcentaje de tests óptimo:
 ```
 "pre-commit": "npm test && npm run check-coverage"
 ```
