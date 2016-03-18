@@ -327,12 +327,15 @@ semantic-release-cli setup
 - Semantic Release se ejecuta a través de Travis CI
 - Travis CI se ejecuta al hacer un push (hay que configurarlo desde la web)
 - Los commit tienen que seguir las [reglas del equipo de Angular](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#rules)
-- Para hacerlo más sencillo utilizaremos **commitizen** que nos ayudará en la generación de los mensajes de los commit:
+
+## Uso de commitizen
+- **commitizen** que nos ayudará en la generación de los mensajes de los commit.
+- La instalación, siguiendo su [documentación](https://www.npmjs.com/package/commitizen):
 ```
-npm install commitizen -g
+sudo npm install commitizen -g
 commitizen init cz-conventional-changelog --save-dev --save-exact
 ```
-
+- Ahora utilizaremos **git cz** en vez de **git commit** para hacer los commits.
 
 
 
