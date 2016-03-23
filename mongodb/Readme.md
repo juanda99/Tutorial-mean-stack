@@ -1,5 +1,26 @@
-## MongoDB
-- Versiones Community Edition o Enterprise
+## ¿Qué es MongoDB?
+- Base de datos noSQL
+    - No es relacional
+    - No tiene un lenguaje SQL
+- Open Source
+- Orientada a documentos
+    - Tablas -> Colecciones
+    - Filas -> Documentos
+- Muy buena para datos sin estructura fija
+
+
+## Relacional vs orientada a documentos
+
+facturas_cab (id_factura, id_cliente, fecha, num_factura, importe_total)
+facturas_det (id_factura_det, concepto, importe)
+
+vs
+
+factura(id_factura, cliente_nombre, cliente_dni, num_factura, importe_total, array (concepto, importe))
+
+## Versiones de MongoDB
+- Community Edition 
+- Enterprise
 
 
 ## Ventajas de la versión Enterprise
@@ -27,6 +48,240 @@ sudo service mongod start
 sudo service mongod stop
 sudo service mongod restart
 ```
+
+# Operaciones CRUD en MongoDB
+
+## Colecciones
+- Cada colección la forman un conjunto de documentos
+- Cada documento tiene entidad por sí mismo
+- Tienen un **esquema dinámico**
+    - Cada documento puede tener campos distintos
+
+## Mongo Shell
+- Mediante el comando **mongo** podemos entrar al intérprete de MongoDB
+- Nos comunicaremos con MongoDB a través del shell **usando JavaScript**
+- Los documentos se almacenan en BSON (similar a JSON)
+```
+var alumno1 = {
+    "nombre: "Pepe",
+    "apellido": "García",
+    "edad": 20
+}
+```
+
+## Primeros comandos
+- Ver bases de datos y colecciones:
+```
+show databases / show dbs
+show collections
+```
+- Ver base de datos actual
+```
+db
+```
+- Usar la base de datos colegio (si no existe, la crea)
+```
+use colegio
+```
+- Ayuda
+```
+help
+db.help()
+```
+## Inserción de datos
+- La colección alumnos, si no existe, se crea
+- alumno es el objeto json definido anteriormente
+```
+db.alumnos.insert(alumno1)
+```
+## Buscar datos
+- Utilizamos el método find() de las colecciones
+- Se diferencia mayúsculas y minúsculas
+```
+db.alumnos.find()
+db.alumnos.find({"nombre": "Pepe"})
+```
+- Observa que a los elementos creados, MongoDB les asocia un **atributo _id**
+    - Utiliza el tipo de datos ObjectId
+    - Lo habitual es dejar que los gestione MongoDB
+
+## Documentos complejos
+
+```
+var alumno2 = {
+ "nombre": "Juan",
+ "apellido": "Marcos",
+ "edad": 20,
+ "fechaAlta":  new Date (2015, 8, 13),
+ "modulos": ["Diseño web", "Desarrollo web cliente", "Entornos de desarrollo"],
+ "calificaciones": {"Bases de datos": 5, "Lenguaje de marcas": 8, "Programación": 7}
+}
+db.alumnos.insert(alumno2)
+```
+- Calificaciones es un **documento embebido**
+- La fecha es el 13 de Septiembre, ¡los meses en js empiezan en 0!
+
+## Más búsquedas
+- Alumnos que cursan Diseño Web:
+```
+db.alumnos.find({"modulos": "Diseño web"})
+```
+- Alumnos que tienen un 10 en Programación:
+```
+db.alumnos.find({"calificaciones.Programacion": 10})
+```
+
+
+## Validación de datos
+- Los datos no se validad
+    - Se puede insertar cualquier cosa en cualquier campo
+    - Si el campo no existe se crea
+- Las únicas validaciones son:
+    - Que no exista otro documento con el mismo id
+    - Que no haya errores de sintaxis
+    - Que el documento no pese más de 16Mb
+
+## Borrar documentos
+- El método **remove()** borra todos los documentos de la colección que cumplen la query:
+- no se usa *delete* porque es una palabra reservada de js
+```
+db.alumnos.remove({"nombre": "Pepe"})
+```
+
+## Actualizar documentos
+- El **método update** tiene dos parámetros:
+    - La query
+    - El parámetro de actualización (van con $)
+```
+db.alumnos.update(
+    {"nombre": "Juan", "apellido": "Marcos"}, 
+    {"$set": {"calificaciones.Programación": 9}}
+)
+```
+- En el siguiente caso, cambiaríamos un documento por otro (puede ser útil si importamos datos):
+```
+db.alumnos.update(
+    {"nombre": "Juan", "apellido": "Marcos"}, 
+    {"calificaciones.Programación": 9}
+)
+```
+- Los update actualizan el primer documento que cumple la query.
+- Para hacer varias actualizaciones a la vez, usamos un tercer parámetro:
+```
+db.alumnos.update(
+    {"fechaAlta":  new Date (2015, 8, 13)}, 
+    {"$set": {"fechaAlta": new Date (2016, 8, 13)}},
+    {"multi": true}
+)
+```
+
+## Actualiación con $inc
+- Creamos una colección que cuente los accesos a las fichas de los alumnos
+- Actualizamos los accesos incrementando una unidad:
+```
+db.logs.update(
+	{"nombre": "Juan", "apellido": "Marcos"},
+	{"$count": {"accesos": 1}}
+) 
+```
+
+## upsert
+- La primera vez, no habría actualización, porque la query inicial no selecciona ningún documento
+- Habría que hacer un **upsert**
+- Si el documento no existe se crea con los valores de la query y el parámetro de update
+```
+db.logs.update(
+	{"nombre": "Juan", "apellido": "Marcos"},
+	{"$count": {"accesos": 1}},
+	{"upsert": true}
+) 
+```
+- Si ejecutamos de nuevo la query, hará una modificación en vez de un upsert.
+
+## $unset
+- Sirve para eliminar campos en documentos
+- Eliminemos el campo fechaAlta en todos los documentos:
+```
+db.alumnos.update(
+	{},
+	{"$unset": {"fechaAlta":""}},
+ 	{"multi": true}
+)
+```
+- La query vacía {} es para seleccionar todos los documentos de la colección
+- El valor de fechaAlta solo sirve para que el json tenga una sintaxis correcta
+- El parámetro multi es necesario para que actualice más de un registro
+
+## $rename
+- Para cambiar el nombre de un campo
+- Funcionamiento similar a $unset
+
+## Actualización de un array
+- Vamos a actualizar *Diseño web* a *Diseño de interfaces web*:
+```
+{
+ "nombre": "Juan",
+ "apellido": "Marcos",
+ "edad": 20,
+ "fechaAlta":  new Date (2015, 8, 13),
+ "modulos": ["Diseño web", "Desarrollo web cliente", "Entornos de desarrollo"],
+ "calificaciones": {"Bases de datos": 5, "Lenguaje de marcas": 8, "Programación": 7
+}
+```
+- Problemática (eliminaría el resto de módulos):
+```
+db.alumnos.update(
+	{"modulos": "Diseño web"},
+	{"$set": {"modulos": "Diseño de interfaces web}}
+```
+
+- Solución (utilizamos el índice del array):
+
+```
+db.alumnos.update(
+	{"modulos": "Diseño web"},
+	{"$set": {"modulos.0": "Diseño de interfaces web}}
+)
+```
+
+## Operador posicional
+- Si actualizamos varios documentos:
+    - Hara falta el parámetro **multi**
+    - El módulo que queremos actualizar no estará siempre en la primera posición
+- La query debe tener el valor que queremos cambiar
+```
+db.alumnos.update(
+	{"modulos": "Diseño web"},
+	{"$set": {"modulos.$": "Diseño de interfaces web}},
+ 	{"multi": true}
+)
+```
+
+
+
+## Otros operadores de actualización
+- **$max**: Actualiza si el nuevo valor es mayor que el actual (o si está vacío)
+- **$min**: Actualiza si el nuevo valor es menor que el actual (o si está vacío)
+- **$mul**: Múltiplica el campo por el valor especificado (o 0 si vacío)
+- **$pop**: para quitar valores de un arrray (por delante o detrás)
+- **$push**: para añadir valores a un array (por el final)
+- **$addToSet**: añade el valor al final del array si no existe previamente
+- **$pull**: para quitar determinados valores de un array 
+
+
+## Operadores de comparación
+- $lt, $gt, $lte, $gte, $ne
+
+```
+db.alumnos.find(
+	{"edad": {"$gt": 20}}
+)
+db.alumnos.find(
+	{"edad": {"$gt": 20, "$lt": 40	}}
+)
+```
+
+
 
 # Almacenamiento en MongoDB
 
