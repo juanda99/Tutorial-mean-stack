@@ -60,3 +60,6 @@ test<tab>
 ```
 - **Git gutter**: para ver las modificaciones del código respecto al último commit. El resto de interacción con Git mediante consola (aunque existen plugins)
 - **markdown editing**
+- **Snippets para react**:
+    - Utilizamos  **React ES6 Snippets** ya que está basado en el paquete de Facebook pero con características de JavaScript ES6 y ES7
+    - Tendremos que modificar los snippets que utilicemos para cumplir con nuestro estilo de código. Para ver y poder modificar los snippets utilizaremos el paquete **PackageResourceViewer**. Más info en http://stackoverflow.com/questions/21190392/how-to-change-default-code-snippets-in-sublime-text-3.
