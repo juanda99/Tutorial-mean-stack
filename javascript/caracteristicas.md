@@ -151,3 +151,9 @@ trackUser =  function(userId) {
 
 # 3ª Opción: Mediante [Iron Node](https://github.com/s-a/iron-node)
 
+# ES6
+- ECMAScript6 (o ECMAScript 2015) es el nuevo estandar.
+- [Características de ES6](http://babeljs.io/docs/learn-es2015/)
+- [Tabla de compatibilidad](http://kangax.github.io/compat-table/es6/)
+- Necesitamos un transpiler para convertir el código en ES6 a ES5: Babel
+- Más info http://egorsmirnov.me/2015/05/22/react-and-es6-part1.html
