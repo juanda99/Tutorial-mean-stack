@@ -131,6 +131,16 @@ db.alumnos.find({"modulos": "Diseño web"})
 db.alumnos.find({"calificaciones.Programacion": 10})
 ```
 
+## Búsquedas dinámicas:
+- Queremos buscar en base a un campo que recibimos mediante variable:
+```
+var modulo = "Diseño web"
+var campo = "modulos"
+var query={}
+query[campo]=modulo
+db.alumnos.find(query)
+```
+
 
 ## Validación de datos
 - Los datos no se validad
