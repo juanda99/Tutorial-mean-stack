@@ -85,8 +85,8 @@ npm bin
   main.js
   component.js
 /build
-  bundle.js (automatically created)
-  index.html
+  bundle.js (creado mediante webpack)
+  index.html (a mano o mediante webpack)
 package.json
 webpack.config.js
 ```
@@ -136,6 +136,45 @@ module.exports = {
     - a partir del indicado en entry: main.js 
     - Examina sus dependencias y las incluye en el bundle.
 
+## Ejecución
+- Ejecutamos webpack:
+```
+node_modules/.bin/webpack
+```
+- Creamos el fichero build/index.html que carge el js
+- Probamos que muestre *Hola Mundo*
+
+## Generación index.html de forma dinámica
+- Utilizaremos el [plugin HtmlWebpackPlugin](https://www.npmjs.com/package/html-webpack-plugin) para webpack:
+
+```
+var path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+module.exports = {
+    entry: path.resolve(__dirname, 'app/main.js'),
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: 'bundle.js',
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Hola Mundo'
+      })
+    ]
+};
+```
+
+## Añadimos nuestro proceso de compilación al proyecto
+- En los scripts del fichero package.json añadimos la compilación:
+```
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+```
+
+- Ahora podremos ejecutarlo mediante **npm run build**
+- No hace falta poner la ruta, ya que npm añade de forma temporal el directorio *node_modules/.bin* al PATH. 
 
 ## Referencias
 - http://survivejs.com/webpack/introduction-to-webpack/
