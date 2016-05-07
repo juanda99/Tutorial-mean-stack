@@ -170,7 +170,7 @@ npm bin
   main.js
   component.js
 /build
-  bundle.js (creado mediante webpack)
+  bundle.js (se creará mediante webpack)
   index.html (a mano o mediante webpack)
 package.json
 webpack.config.js
@@ -210,6 +210,7 @@ node_modules/.bin/webpack
 ```
 - Creamos el fichero build/index.html que carge el js
 - Probamos que muestre *Hola Mundo*
+- Este ejemplo y los siguientes los puedes descargar de un [repositorio de GitHub](https://github.com/juanda99/webpack-ejemplos-tutorial)
 
 ## Generación index.html de forma dinámica
 - Utilizaremos el [plugin HtmlWebpackPlugin](https://www.npmjs.com/package/html-webpack-plugin) para webpack:
