@@ -55,14 +55,99 @@
 </html>
 ```
 
-## Generación entorno mediante webpack
-- Utilizamos node para montar nuestro entorno de desarrollo
+## Generación Hola Mundo mediante webpack
+- Supongamos que el js del ejemplo anterior lo dividimos en dos ficheros:
+  - *main.js*:
+    - Se encarga de hacer de puente entre los js de mi app (en un futuro componentes) y el html
+  - *component.js*:
+    - Representa un componente que generará un título para mi página
+    - Este componente podría recibir parámetros como el texto del título, el estilo o incluso llamar a otros componentes...
+    
+## Fichero main
+- *main.js*:
+```
+'use strict';
+var component = require('./component.js');
+document.body.appendChild(component());
+```
+
+## Fichero component
+- *component.js*:
+```
+'use strict';
+module.exports = function () {
+    var element = document.createElement('h1');
+    element.innerHTML = 'Hola Mundo';
+    return element;
+};
+```
+
+
+## Uso básico de webpack
+- Instalamos webpack a nivel global (sudo en linux):
+```
+sudo npm i webpack -g
+```
+
+- Compilamos nuestro main.js:
+```
+webpack main.js bundle.js
+```
+
+- Lo llamamos desde un html:
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejercicio</title>
+</head>
+<body>
+ <script src='bundle.js'></script> 
+</body>
+</html>
+```
+
+- ¿Y si llamáramos al main.js en vez del bundle.js?
+
+## Opciones de webpack
+- ¿Qué hace webpack?
+  - Junta todo nuestro js en un solo fichero
+  - Divide el js en módulos
+  - Carga el módulo inicial
+
+- Para ver toda las posibilidades
+```
+webpack --help
+```
+
+- Por ejemplo:
+webpack -w main.js bundle.js // se queda como un servicio
+webpack -p main.js bundle.js // minified
+webpack -d main.js bundle.js //debug con sourcemap
+
+## Configuración de webpack
+- webpack tiene muchas opciones
+  - Usaremos un fichero de configuración para personalizarlo
+  - Utilizamos node para montar nuestro entorno de desarrollo (plugins para webpack por ejemplo)
+  - Instalaremos webpack de forma local a nuestro proyecto
+
+## Generación entorno de desarrollo
+- Mediante node
+  - Deberá estar instalado node y su gestor de paquetes npm
+- Creamos nuestro proyecto
 ```
 mkdir hola-mundo
 cd hola-mundo
 npm init -y
 ```
 - Se genera el fichero *package.json* con las propiedades del proyecto
+
+# Instalación de Webpack
+- Desinstalamos webpack (lo teníamos instalado de forma global):
+```
+npm remove --save-dev webpack
+```
 - Instalamos webpack como dependencia de nuestro proyecto:
 ```
 npm install --save-dev webpack
@@ -99,24 +184,6 @@ webpack.config.js
 - *component.js* es una dependencia 
 - *webpack.config.js* es el fichero de configuración de webpack
 
-## Fichero main
-- *app/main.js*:
-```
-'use strict';
-var component = require('./component.js');
-document.body.appendChild(component());
-```
-
-## Fichero component
-- *app/component.js*:
-```
-'use strict';
-module.exports = function () {
-    var element = document.createElement('h1');
-    element.innerHTML = 'Hola Mundo';
-    return element;
-};
-```
 
 ## Fichero de configuración de webpack
 
