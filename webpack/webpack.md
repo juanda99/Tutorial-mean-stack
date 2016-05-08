@@ -244,5 +244,65 @@ module.exports = {
 - Ahora podremos ejecutarlo mediante **npm run build**
 - No hace falta poner la ruta, ya que npm añade de forma temporal el directorio *node_modules/.bin* al PATH. 
 
+## Añadir CSS
+- Añadimos nuestro fichero component.css:
+```
+h1 {
+  color: red;
+}
+```
+- Lo llamamos desde nuestro fichero component.js:
+```
+'use strict';
+require("./component.css");
+module.exports = function () {
+    var element = document.createElement('h1');
+    element.innerHTML = 'Hola Mundo';
+    return element;
+};
+```
+
+## Procesar CSS
+- Webpack debe saber importar ficheros css, para ello necesita 2 loaders:
+  - **CSS loader**: que importa el fichero CSS y procesa los import y url() que tenga.
+  - **Style loader**: que procesa el CSS generado por CSS Loader y lo inserta en nuestra página html.
+- Instalamos los módulos:
+```
+npm i -D css-loader style-loader
+```
+- Configuramos el módulo en webpack:
+```
+    module: {
+        loaders: [
+            { test: /\.css$/, loader: "style-loader!css-loader" }
+        ]
+    }
+```
+
+## Añadir SASS
+- Cambiamos nuestro fichero component.css por component.scss y con código propio de Sass:
+```
+$primary-color: red;
+h1 {
+  color: $primary-color;
+}
+```
+- Cambiamos el require de component.js para que llame al fichero anterior.
+
+## Procesar SASS
+- Instalamos los paquetes necesarios:
+```
+npm i -D sass-loader node-sass
+```
+- Añadimos el procesado de ficheros scss desde webpack:
+```    
+    module: {
+        loaders: [
+            { test: /\.css$/, loader: "style-loader!css-loader" },
+            { test: /\.scss$/, loader: "style-loader!css-loader!sass-loader" }
+        ]
+    }
+```
+
 ## Referencias
 - http://survivejs.com/webpack/introduction-to-webpack/
