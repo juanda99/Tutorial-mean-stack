@@ -304,5 +304,68 @@ npm i -D sass-loader node-sass
     }
 ```
 
+## Configuración para usar Boostrap
+- Por defecto bootstrap viene con less
+```
+npm i -S bootstrap
+```
+- Añadimos a la configuración de webpack:
+```
+{ test: /\.less$/, loader: "style!css!less"},
+{ test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
+```
+- Instalamos los paquetes necesarios:
+```
+npm i -D url-loader file-loader less less-loader
+```
+
+- Para cargar fuentes (ficheros) necesitaremos un cargador de ficheros file-loader
+- O mejor url-loader que nos las insertará de forma inline en función del peso, [ahorrando peticiones html](http://dataurl.net/#about).
+
+## Ejemplo de uso con Bootstrap
+- Creamos un fichero app/boostrap.less copia de *node_modules/bootstrap/less/bootstrap.less*
+```
+// Core variables and mixins
+@import "~bootstrap/less/variables.less";
+@import "~./misvariables.less";
+@import "~bootstrap/less/mixins.less";
+
+// Reset bootstrap/less/and dependencies
+@import "~bootstrap/less/normalize.less";
+@import "~bootstrap/less/print.less";
+@import "~bootstrap/less/glyphicons.less";
+....
+```
+- Para modificar el fichero mediante Sublime es útil seleccionar por columnas (ratón derecho + Mayúsculas)
+- Mi fichero de prueba *misvariables.less*:
+```
+//** Background color for `<body>`.
+@body-bg:               red;
+//** Global text color on `<body>`.
+@text-color:            #fff;
+```
+- Lo llamamos desde component.js:
+```
+'use strict';
+require("./bootstrap.less")
+module.exports = function () {
+    var element = document.createElement('h1');
+    element.innerHTML = 'Hola Mundo';
+    return element;
+}; 
+```
+
+- Ojo, afecta a todo el documento:
+  - Normal, porque es el body
+  - Y porque **el CSS es global** 
+  - ¿Empezamos a ver la pega para trabajar con componentes web?
+
+## Bootstrap con Sass
+- Proceso parecido al anterior, pero instalando un paquete que tenga los fuentes en Sass: [bootstrap-sass](https://github.com/twbs/bootstrap-sass)
+- También podemos instalar [bootstrap-loader](https://www.npmjs.com/package/bootstrap-loader)
+  - Usa Sass
+  - Nos permite un fichero de configuración en YAML o JSON: **.bootstraprc**
+
+
 ## Referencias
 - http://survivejs.com/webpack/introduction-to-webpack/
