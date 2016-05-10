@@ -1,11 +1,30 @@
 # Características de JavaScript
 
+## Versiones de JavaScript
+- **ES5**: 
+  - Desde el 2009. 
+  - La entienden todos los navegadores.
+- **ES6 o ES2015**: 
+  - Finalizada en Julio 2015, ¡después de 6 años!
+  - [Soporte incompleto por los navegadores](http://kangax.github.io/compat-table/es6/) (hay que usar un transpiler: Babel)
+  - [Guía de ES2015](http://babeljs.io/docs/learn-es2015/)
+- **ES7** 
+  - Ya no se llamará asi
+  - Se crean propuestas que se van aprobando y añadiendo al lenguaje.
+  - Así tenemos **stages**:
+    - Stage 0 - Strawman
+    - Stage 1 - Proposal
+    - Stage 2 - Draft
+    - Stage 3 - Candidate
+    - Stage 4 - Finished
+
+- Más info: http://www.2ality.com/2015/11/tc39-process.html
+
 # JavaScript es Single Thread
 - Nuestro código se ejecuta en un solo hilo
 - Evitamos [típicos errores de la programación multihilo](http://stackoverflow.com/questions/499634/how-to-detect-and-debug-multi-threading-problems)
     - Dificiles de detectar
     - Dificiles de replicar
-
 
 
 # LLamadas síncronas o bloqueantes
@@ -115,6 +134,8 @@ trackUser =  function(userId) {
     - El soporte de ES6 en node es limitado (--harmony) y también en el navegador => TRANSPILERS (babel)
 - Ver [comparativa de métodos asíncronos](https://thomashunter.name/blog/the-long-road-to-asyncawait-in-javascript/)
 
+
+
 # Debug en node:
 
 # babel-node-debug index.js
@@ -151,9 +172,6 @@ trackUser =  function(userId) {
 
 # 3ª Opción: Mediante [Iron Node](https://github.com/s-a/iron-node)
 
-# ES6
-- ECMAScript6 (o ECMAScript 2015) es el nuevo estandar.
-- [Características de ES6](http://babeljs.io/docs/learn-es2015/)
-- [Tabla de compatibilidad](http://kangax.github.io/compat-table/es6/)
-- Necesitamos un transpiler para convertir el código en ES6 a ES5: Babel
+
+
 - Más info http://egorsmirnov.me/2015/05/22/react-and-es6-part1.html
