@@ -433,6 +433,7 @@ npm i --save-dev eslint
   - Necesitamos editar en vivo:
     - Hay que configurar el plugin React Hot Loader
   - Lo mejor es utilizar un [starter kit](https://github.com/juanda99/react-simple-starter-kit)
+  - Por último [añadiremos snippets a Sublime](https://github.com/juanda99/react-v0.14-snippets) para poder trabajar con React más rápido
 
 ## Referencias
 - http://survivejs.com/webpack/introduction-to-webpack/
