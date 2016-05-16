@@ -366,6 +366,74 @@ module.exports = function () {
   - Usa Sass
   - Nos permite un fichero de configuración en YAML o JSON: **.bootstraprc**
 
+## Añadir ESLint
+- Instalamos ESLint en nuestro proyecto
+```
+npm i --save-dev eslint
+```
+
+## ESLint: Fichero de configuración
+- [Guía de configuración](http://eslint.org/docs/user-guide/configuring) y [reglas]((http://eslint.org/docs/rules/)
+- Mediante el fichero JSON *.eslintrc*, por ejemplo: 
+```
+{
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "globals": {
+    //place settings for globals here, such as
+    "exampleGlobalVariable": true
+  },
+  "rules": {
+    //enable ESLint rules, such as
+    "semi" : [2, "never"]
+  },
+  "plugins": [
+    //you can put plugins here
+  ]
+}
+```
+
+# Configuración de reglas
+- Las reglas pueden tener 3 valores:
+    - 0: Desactiva la regla
+    - 1: Genera un warning (pero el código no hace un exit)
+    - 2: Genera un error y el código hace un exit 1
+
+- Por ejemplo en el .eslintrc anterior el editor nos marcará como error los ; a final de linea
+
+# extend
+- Lo más cómodo es utilizar eslint configurado ya por alguien, y luego hacer nuestras pequeñas modificaciones mediante rules.
+  - Si hacemos un PR a repositorios de Airbnb, Google... deberemos ser fieles a su guía de estilos
+  - Utitlizaremos la guía de Airbnb porque está muy documentada:
+  https://www.npmjs.com/package/eslint-config-airbnb-base
+  - La podemos modificar, por ejemplo quitando los ; al final de las líneas.
+
+# Instalación configuración de Airbnb
+- Lo más cómodo con el propio ejecutable de eslint:
+```
+./node_modules/.bin/eslint --init
+```
+- Elegimos:
+  - Use a popoular style guide
+  - AirBnB
+  - JSON
+
+- Nos creará el fichero .eslintrc.json y dos entradas de dependencias en el package.json:
+```
+"eslint-config-airbnb": "^9.0.1",
+"eslint-plugin-react": "^5.1.1",
+```
+
+## Starter kit
+- La configuración de Webpack puede ser mucho más compleja:
+  - Nos falta poder escribir en ES6 en vez de JavaScript tradicional (transpiler babel)
+  - Utilizaremos JSX (JavaScript XML, específico de React)
+  - Necesitamos editar en vivo:
+    - Hay que configurar el plugin React Hot Loader
+  - Lo mejor es utilizar un [starter kit](https://github.com/juanda99/react-simple-starter-kit)
+  - Por último [añadiremos snippets a Sublime](https://github.com/juanda99/react-v0.14-snippets) para poder trabajar con React más rápido
 
 ## Referencias
 - http://survivejs.com/webpack/introduction-to-webpack/
