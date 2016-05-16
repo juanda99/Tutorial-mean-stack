@@ -1,16 +1,4 @@
 # API en Node.js
-## API REST vs JSON API
-- [Sitio Web](http://jsonapi.org/)
-- Historia:
-2015-05-29: 1.0 final released.
-2015-05-21: Release candidate 4 released.
-2015-03-16: Release candidate 3 released.
-2015-02-18: Release candidate 2 released.
-2014-07-05: Release candidate 1 released.
-2013-07-21: Media type registration completed with the IANA.
-2013-05-03: Initial release of the draft.
-
----
 
 ## Primeros pasos
 - npm configurado y git configurado
@@ -25,7 +13,6 @@ npm install --save express
 npm i -S express
 ```
 
----
 
 - Creamos el fichero app/server.js donde pondremos el código necesario para testear una API muy básica para probar Express:
 
@@ -60,6 +47,7 @@ node app/server.js
 Probamos que la API funcione mediante http://localhost:8080. 
 
 - Para homogeneizar, vamos a crear un script en nuestro fichero package.json, de modo que podamos arrancar nuestra API mediante ```npm start```
+
 ```
 "start": "node app/server.js"
 ```
@@ -140,12 +128,7 @@ app.use(bodyParser.json())
 
 - Una forma buena para testear el funcionamiento es instalar una extensión de Chrome: [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
 
-## Acceso a base de datos
-- Trabajaremos con MongoDB así operamos con objetos json tanto en node como en bbdd.
-- Instalaremos [mongoose] como ODM (Object Document Mapper) en vez de trabajar con el driver nativo de MongoDB (se utiliza por debajo).
-```
-npm i -S mongoose
-```
+## Rutas de nuestra API REST
 
 - Las rutas que utilizaremos son las siguientes:
 
@@ -156,6 +139,48 @@ npm i -S mongoose
 | /api/cervezas | POST | Damos de alta una cerveza |
 | /api/cervezas/:cerveza_id | PUT | Actualizamos los datos de una cerveza |
 | /api/cervezas/:cerveza_id | DELETE | Borramos los datos de una cerveza |
+
+## Acceso a base de datos
+- Para la persistencia de nuestros datos utilizaremos una base de datos
+- Optamos por una base de datos MongoDB:
+    - Y es lo más habitual en arquitecturas MEAN
+    - Así operamos con objetos json tanto en node como en bbdd (bson)
+    - Nos permite más libertad, al utilizar colecciones en vez de tablas
+
+## Instalación de MongoDB
+- [Instalaremos primero mongodb](https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/):
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+```
+
+- El servicio se levanta como otros servicios de Linux: 
+```
+sudo service mongod start
+```
+
+- Y para entrar a su consola, mediante **mongo**, o mediante algún gui como por ejemplo [Robomongo](https://robomongo.org/) 
+
+- La consola de Mongo también es un intérprete de JavaScript :-)
+
+## Inserción de datos
+
+- Utilizaremos el fichero *cervezas.json*
+- Importar nuestro cervezas.json a una base de datos
+```
+mongoimport --db test --collection cervezas --drop --file cervezas.json --jsonArray
+```
+
+## Instalación de Mongoose
+
+- Instalaremos [mongoose] como ODM (Object Document Mapper) en vez de trabajar con el driver nativo de MongoDB (se utiliza por debajo).
+```
+npm i -S mongoose
+```
+
+
 
 ## Uso de Mongoose
 - Incluir Mongoose y abrir una conexión:
@@ -198,8 +223,5 @@ miCerveza.save(function (err, miCerveza) {
 ```
 
 
-- Importar nuestro cervezas.json a una base de datos
-```
-mongoimport --db test --collection cervezas --drop --file cervezas.json --jsonArray
-```
+
 
