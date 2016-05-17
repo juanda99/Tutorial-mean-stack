@@ -87,6 +87,12 @@ sudo apt-get install sublime-text-installer
 - [Desde la web](https://www.google.com/chrome/browser/desktop/index.html)
 
 ## Instalación de Adobe Brackets
-- [Dessde brackets.io](http://brackets.io/)
+- [Web de referencia](http://brackets.io/)
 - Es un editor exclusivamente para web (js, html, css)
+- [Más información](http://www.formandome.es/linux/instalacion-y-configuracion-de-brackets-en-ubuntu-14-04/)
+- 
+## Instalación de Gnome Shell
+- [Como instalarlo y configurarlo](http://www.formandome.es/linux/configuracion-inicial-de-ubuntu-14-04/)
+- Instalaremos también un terminal: Guake
+
 
