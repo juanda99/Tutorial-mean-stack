@@ -83,3 +83,10 @@ sudo apt-get update
 sudo apt-get install sublime-text-installer
 ```
 
+## Instalación de Google Chrome
+- [Desde la web](https://www.google.com/chrome/browser/desktop/index.html)
+
+## Instalación de Adobe Brackets
+- [Dessde brackets.io](http://brackets.io/)
+- Es un editor exclusivamente para web (js, html, css)
+
