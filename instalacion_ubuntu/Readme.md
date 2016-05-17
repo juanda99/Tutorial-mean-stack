@@ -73,3 +73,13 @@ sudo apt-get install fish
 chsh -s `which fish`
 ```
 
+## Instalación de Sublime Text 3
+
+- [Instalación y configuración de Sublime Text 3 en Ubuntu 14.04 para desarrollo Web](http://www.formandome.es/linux/instalacion-y-configuracion-de-sublime-text-3-en-ubuntu-14-04-para-desarrollo-web/)
+
+```
+sudo add-apt-repository ppa:webupd8team/sublime-text-3 
+sudo apt-get update
+sudo apt-get install sublime-text-installer
+```
+
