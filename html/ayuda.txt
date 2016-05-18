@@ -1,0 +1,41 @@
+Resolución ejercicio:
+
+! -> esqueleto aplicación
+Generar cabecera mediante emmet: 
+header>h1+h2+nav>ul>li*3>a
+¿Menú de navegación dentro o fuera del header?
+¿h2 o simplemente un párrafo?
+h1 + h2 dentro de un hgroup? ¡deprecated hgroup!
+
+Página inicial: 
+- Dentro de un main, que tendrá un h1
+- Estructura a base de articles:
+
+<article>
+  <header>
+    <h1><a href="" title=""><!-- titulo noticia --></a></h1>
+    <p>fecha</p>  
+  </header>
+  <img src="" alt="" />
+  <p></p>
+</article>
+
+Páginas 2:
+Una lista de cervezas, mediante emmet
+
+Página 3:
+Formulario de contacto
+
+Convertir el json:
+
+- Borramos todas las llaves y paréntesis: linea 1 y seleccionamos por columna (botón derecho y mays)
+Reemplazar la " por nada en current file (CTRL + MAYS + f)
+
+- Cambiamos el ajuste de línea en Preferences->Settings user: "word_wrap": true,
+
+- Vamos a quitar ahora las ",":
+CTRL + A para seleccionar todo el texto
+CTRL + MAYS + L para ir al final, pulsamos en -> para dejar de seleccionar todo y luego borramos caracter anterior (escape para quitar multicursor)
+Y luego quitamos resto de caracteres.
+
+Cada cerveza va a ser un article (seleccionamos varias con el CTRL pulsado) y luego CTRL+ALT+G para emmet
