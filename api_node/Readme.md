@@ -135,10 +135,11 @@ app.use(bodyParser.json())
 | Ruta     | Verbo http    |  Cool |
 |----------|:-------------:|------|
 | /api/cervezas |  GET | Obtenemos todas las cervezas |
-| /api/cervezas/cerveza_id |  GET | Obtenemos los datos de una cerveza |
+| /api/cervezas/q=keyword |  GET | Obtenemos cervezas por keyword |
+| /api/cervezas/:id |  GET | Obtenemos los datos de una cerveza |
 | /api/cervezas | POST | Damos de alta una cerveza |
-| /api/cervezas/:cerveza_id | PUT | Actualizamos los datos de una cerveza |
-| /api/cervezas/:cerveza_id | DELETE | Borramos los datos de una cerveza |
+| /api/cervezas/:id | PUT | Actualizamos los datos de una cerveza |
+| /api/cervezas/:id | DELETE | Borramos los datos de una cerveza |
 
 ## Acceso a base de datos
 - Para la persistencia de nuestros datos utilizaremos una base de datos
@@ -173,6 +174,29 @@ sudo service mongod start
 mongoimport --db test --collection cervezas --drop --file cervezas.json --jsonArray
 ```
 
+- Para poder hacer una búsqueda por varios campos de texto, tendremos que hacer un índice:
+```
+db.cervezas.createIndex(
+   {
+     "Nombre": "text",
+     "Descripción": "text"
+   },
+   {
+     name: "CervezasIndex", 
+     default_language: "spanish" 
+   }
+)
+```
+- Comprobamos que el índice esté bien creado
+```
+db.cervezas.getIndexes()
+```
+- Si hiciera falta, lo podemos recrear:
+```
+db.cervezas.dropIndex("CervezasIndex")
+```
+
+
 ## Instalación de Mongoose
 
 - Instalaremos [mongoose] como ODM (Object Document Mapper) en vez de trabajar con el driver nativo de MongoDB (se utiliza por debajo).
@@ -191,28 +215,51 @@ mongoose.connect('mongodb://localhost/test')
 
 - Usar la conexión:
 ```
-var db = mongoose.connection
-db.on('error', console.error.bind(console, 'Error al conectar'));
-db.once('open', function() {
-  // estamos conectados
+var mongoose = require('mongoose')
+
+var MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/cervezas'
+mongoose.connect(MONGO_URL)
+
+mongoose.connection.on('connected', function () {
+  console.log('Conectado a la base de datos: ' + MONGO_URL)
+})
+
+mongoose.connection.on('error',function (err) {
+  console.log('Error al conextar a la base de datos: ' + err)
+})
+
+mongoose.connection.on('disconnected', function () {
+  console.log('Desconectado de la base de datos')
+})
+
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Desconectado de la base de datos al terminar la app')
+    process.exit(0)
+  })
 })
 ```
 
-- Definir un esquema para nuestros objetos (cervezas):
+- Definir un esquema para nuestros objetos (cervezas) y crear nuestro modelo a partir del esquema:
 ```
-var cervezaSchema = mongoose.Schema({
-    nombre: String,
-    ....
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+
+var cervezaSchema = new Schema({
+  Nombre: String, 
+  Descripción: String, 
+  Graduacion: String,
+  Envase: String,
+  Precio: String 
 })
+
+var Cerveza = mongoose.model('Cerveza', cervezaSchema)
+
+module.exports = Cerveza
 ```
  
 
-- Definir nuestro modelo a partir del esquema:
-```
-var Cerveza = mongoose.model('Cerveza', cervezaSchema);
-```
-
-- Ahora podemos crear documentos y guardarlos en la base de datos:
+- Ahora podríamos crear documentos y guardarlos en la base de datos:
 
 ```
 var miCerveza = new Cerveza({ name: 'Ambar' });
@@ -222,6 +269,6 @@ miCerveza.save(function (err, miCerveza) {
 })
 ```
 
-
+- Vamos a guardar las cervezas en la bbdd
 
 
